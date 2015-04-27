@@ -1,0 +1,17 @@
+{
+  "name": "IQ2015",
+  "version": "0.0.1",
+  "description": "Ideaquest server for WHARRGARBL",
+  "main": "server.js",
+  "dependencies": {
+    "nunjucks": "^1.3.3",
+    "express": "^4.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"No tests written yet...\"",
+    "start": "node server.js"
+  },
+  "author": "Matt Hosack",
+  "license": "ISC"
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WHARRGARBL</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="js/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="container">
+
+      <!-- The justified navigation menu is meant for single line per list item.
+           Multiple lines will require custom code not provided by Bootstrap. -->
+      <div class="masthead">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <h1 class="text-center">
+              WHARRGARBL
+            </h1>
+          </div>
+        </div>  
+        <nav>
+          <ul class="nav nav-justified nav-pills">
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+            <li>Item 4</li>
+            <li>Item 5</li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- BODY -->
+      <div id="main-content" class="hidden">
+{% block maincontent %}
+
+{% endblock %}
+      </div>
+      <!-- END BODY -->
+
+    </div> <!-- /container -->
+
+<!-- JS BEGIN -->
+     <script src="js/jquery-1.11.2.min.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#main-content').fadeIn().removeClass('hidden');
+});
+</script>
+  </body>
+</html>
+
