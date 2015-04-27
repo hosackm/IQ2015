@@ -10,48 +10,41 @@
     <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
-
-    <div class="container">
-
-      <!-- The justified navigation menu is meant for single line per list item.
-           Multiple lines will require custom code not provided by Bootstrap. -->
+    
+    <div class="container-fluid">
       <div class="masthead">
         <div class="row">
-          <div class="col-md-10 col-md-offset-1">
-            <h1 class="text-center">
-              WHARRGARBL
-            </h1>
+          <div class="col-md-9 pull-left">
+            <img src="img/ecobee_icon.svg" class="logo"/>
           </div>
-        </div>  
-        <nav>
-          <ul class="nav nav-justified nav-pills">
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-            <li>Item 4</li>
-            <li>Item 5</li>
-          </ul>
-        </nav>
+          <div class="col-md-1 text-right">
+            <a href="/" class="navitem"><p class="vcenter">Support</p></a>
+          </div>
+          <div class="col-md-1 text-right">
+            <a href="/" class="navitem"><p class="vcenter">Contact Us</p></a>
+          </div>
+          <div class="col-md-1">
+            <a href="/" class="pull-right">
+              <img src="img/menu_icon.svg" class="menu"/>
+            </a>
+          </div>
+        </div> 
       </div>
 
-      <!-- BODY -->
       <div id="main-content" class="hidden">
-{% block maincontent %}
-
-{% endblock %}
+{% block maincontent %}{% endblock %}
       </div>
-      <!-- END BODY -->
+    </div>
 
-    </div> <!-- /container -->
-
-<!-- JS BEGIN -->
-     <script src="js/jquery-1.11.2.min.js"></script>
-     <script src="js/bootstrap.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('#main-content').fadeIn().removeClass('hidden');
-});
-</script>
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#main-content').fadeIn().removeClass('hidden');
+    });
+    </script>
+{% block scripts %}
+{% endblock %}
   </body>
 </html>
 

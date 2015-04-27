@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block maincontent %}
+{% endblock %}
+{% block scripts %}
+<script src="js/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost:8080');
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+  socket.on('loudness', function(data){
+    console.log('received a loudness measurement of:', data);
+  });
+  socket.on('fft', function(data){
+    console.log('received a set of fft data');
+  });
+  
+</script>
+{% endblock %}

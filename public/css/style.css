@@ -1,0 +1,43 @@
+body {
+    background: #0E1113;/*rgba(0, 0, 0, 1);*/
+    color: #FFFFFF; 
+}
+
+.masthead {
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.jumbotron {
+    background-color: #2C3134;/*rgba(100, 100, 100, 0.7);*/
+    height: 360px;
+}
+
+.logo {
+    width:5.8%;
+}
+
+.menu {
+    background: url('../img/menu_icon.svg');
+    /*background-image: url('../img/menu_icon.svg');*/
+}
+
+.vcenter {
+    padding-top: 6px;
+    font-size: 1.2em;
+}
+
+.navitem {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.navitem:hover {
+    color: #DDDDDD;
+    text-decoration: none;
+}
+.navitem:active {
+    text-decoration: none;
+}
+.navitem:visited {
+    text-decoration: none;
+}
