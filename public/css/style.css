@@ -50,7 +50,46 @@ body {
     height:640px;
 }
 
-/*#fftchart {
-    height: 300px;
-    width: 100%;
+.gridbox {
+    margin-top: 18px;
+    /*background-color: #0E1113;*/
+}
+
+/*.gridcolumn {
+    margin-right: 30px;
 }*/
+
+.cornertl {
+    -webkit-border-top-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    border-top-left-radius: 4px;
+}
+
+.cornertr {
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    border-top-right-radius: 4px;
+}
+
+.cornerbl {
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.cornerbr {
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#map-canvas {
+    margin-top: 60px;
+    margin-left: 60px;
+    width: 1280px;
+    height: 640px;
+/*    height: 480px;
+    height: 100%;
+    margin: 0px;
+    padding: 0px*/
+}

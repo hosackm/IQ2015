@@ -1,10 +1,11 @@
-var express = require('express');
-var app     = express();
-var server  = require('http').createServer(app);
-var io      = require('socket.io').listen(server);
-var nunjucks = require('nunjucks');
-var zmq = require('zmq');
-//var zmqsock = zmq.socket('pull');
+var express     = require('express');
+var app         = express();
+var server      = require('http').createServer(app);
+var io          = require('socket.io').listen(server);
+var nunjucks    = require('nunjucks');
+var zmq         = require('zmq');
+
+// Variables
 var port = process.argv[2] || 8080;
 var rpi = process.argv[3] || 'tcp://127.0.0.1:7777';
 
@@ -19,13 +20,15 @@ app.get('/', function(req, res){
 app.get('/realtime', function(req, res){
   res.render('realtime.html', {});
 });
+app.get('/heatmap', function(req, res){
+  res.render('heatmap.html', {});
+});
 
 // Socket.io Logic
 io.on('connection', function (socket) {
   console.log('socket.io connection made');
   var zmqsock = zmq.socket('pull');
   zmqsock.bind(rpi);
-  //zmqsock.connect(rpi);
   zmqsock.on('message', function(msg){
     msg = msg.toString();
     var msgtype = msg.charAt(0);

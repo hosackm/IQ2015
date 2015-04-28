@@ -1,34 +1,87 @@
 {% extends "base.html" %}
 
-{% block maincontent %}
-<div clas="row">
-  <div class="col-md-4 jumbotron text-center">
-    <p>jumbo 1</p>
+{% block grid %}
+<div class="row">
+  <div class="col-md-3">
+    <div class="row"> <!-- Home 3x1 -->
+      <div class="col-md-12 text-center gridbox cornertl">
+        <img src="img/home-icon.png"/>
+      </div>
+    </div>
+    <div class="row"> <!-- FAN 1x1 -->
+      <div class="col-md-12 text-center gridbox cornerbl">
+        <img src="img/fan-icon.png"/>
+      </div>
+    </div>
   </div>
-  <div class="col-md-4 jumbotron text-center">
-    <p>jumbo 2</p>
+  <div class="col-md-3">
+    <div class="row"><!-- Quick Changes 2x1 -->
+      <div class="col-md-12 text-center gridbox">
+        <img src="img/quick-changes-icon.png"/>
+      </div>
+    </div>
+    <div class="row"><!-- Settings 1x1 -->
+      <div class="col-md-12 text-center gridbox">
+        <img src="img/settings-icon.png"/>
+      </div>
+    </div>
+    <div class="row"><!-- System 1x1 -->
+      <div class="col-md-12 text-center gridbox">
+        <img src="img/system-icon.png"/>
+      </div>
+    </div>
   </div>
-  <div class="col-md-4 jumbotron text-center">
-    <p>jumbo 3</p>
+  <div class="col-md-3">
+    <div class="row"><!-- Reminders/Alerts 1x1 -->
+      <div class="col-md-12 text-center gridbox">
+        <img src="img/reminders-icon.png"/>
+      </div>
+    </div>
+    <div class="row"><!-- Vacation 1x1 -->
+      <div class="col-md-12 text-center gridbox">
+        <img src="img/vacation.png"/>
+      </div>
+    </div>
+    <div class="row"><!-- Weather SF 2x1 -->
+      <div class="col-md-12 text-center gridbox">
+        <img src="img/weather.png"/>
+      </div>
+    </div>
   </div>
-</div>
-<div clas="row">
-  <div class="col-md-4 jumbotron text-center" id="realtime">
-    <p>Dolby Life Sensor</p>
-  </div>
-  <div class="col-md-4 jumbotron text-center">
-    <p>jumbo 5</p>
-  </div>
-  <div class="col-md-4 jumbotron text-center">
-    <p>jumbo 6</p>
+  <div class="col-md-3">
+    <div class="row"><!-- Home IQ 1x1 -->
+      <div class="col-md-12 text-center gridbox cornertr">
+        <img src="img/home-iq.png" id="heatmap"/>
+      </div>
+    </div>
+    <div class="row"><!-- Schedule 1x1 -->
+      <div class="col-md-12 text-center gridbox">
+        <img src="img/schedule.png"/>
+      </div>
+    </div>
+    <div class="row"><!-- Sensors 1x1 -->
+      <div class="col-md-12 text-center gridbox">
+        <img src="img/sensors.png" id="realtime"/>
+      </div>
+    </div>
+    <div class="row"><!-- About 1x1 -->
+      <div class="col-md-12 text-center gridbox cornerbr">
+        <img src="img/about.png"/>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-$("#realtime").click(function(){
-  window.location.href='/realtime';
-});
+$(document).ready(function(){
+  $("#realtime").click(function(){
+    window.location.href='/realtime';
+  });
+  $("#heatmap").click(function(){
+    window.location.href='/heatmap';
+  });
+})
 </script>
 {% endblock %}

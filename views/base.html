@@ -38,11 +38,16 @@
       </div>
     </div>
 
+    <div class="container hidden" id="grid">
+{% block grid %}{% endblock %}
+    </div>
+
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
     $(document).ready(function() {
-        $('#main-content').fadeIn().removeClass('hidden');
+      $('#main-content').fadeIn().removeClass('hidden');
+      $('#grid').fadeIn().removeClass('hidden');
     });
     </script>
 {% block scripts %}
