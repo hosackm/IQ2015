@@ -65,23 +65,6 @@
     // $("#louddisplay").text(lcur);
   });
 
-  var chart = new CanvasJS.Chart("fft-chart", 
-    {
-      title: {text: "FFT Plot"},
-      width: 1310,
-      height: 500,
-      animationEnabled: true,
-      axisX:{title: "Frequency (Hz)", interval: 3},
-      axisY:{title: "Magnitude (dB)"},
-      legend: {},
-      data: [{
-        name: 'fft1',
-        type: 'area',
-        color: 'rgba(0, 255, 0, 1)',
-        markerSize: 0,
-      }]
-    });
-
   // Recieve FFT Data
   socket.on('fft', function(data){
     if(!data)
@@ -100,26 +83,25 @@
       return prev;
     }, {data: []});
 
-    // var chart = new CanvasJS.Chart("fft-chart", 
-    // {
-    //   title: {text: "FFT Plot"},
-    //   width: 1310,
-    //   height: 500,
-    //   animationEnabled: true,
-    //   axisX:{title: "Frequency (Hz)", interval: 3},
-    //   axisY:{title: "Magnitude (dB)"},
-    //   legend: {},
-    //   data: [{
-    //     name: 'fft1',
-    //     type: 'area',
-    //     color: 'rgba(0, 255, 0, 1)',
-    //     markerSize: 0,
-    //     dataPoints: points.data
-    //   }]
-    // });
-    chart.options.data[0].dataPoints = points.data;
+    var chart = new CanvasJS.Chart("fft-chart", 
+    {
+      title: {text: "FFT Plot"},
+      width: 1310,
+      height: 500,
+      animationEnabled: true,
+      axisX:{title: "Frequency (Hz)", interval: 3},
+      axisY:{title: "Magnitude (dB)"},
+      legend: {},
+      data: [{
+        name: 'fft1',
+        type: 'area',
+        color: 'rgba(0, 255, 0, 1)',
+        markerSize: 0,
+        dataPoints: points.data
+      }]
+    });
+    //chart.options.data[0].dataPoints = points.data;
     chart.render();
-    //console.log('updated with', points.data);
     //$(".canvasjs-chart-credit").remove();
   });
 
