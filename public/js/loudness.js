@@ -13,6 +13,7 @@ loudchart.streamTo(document.getElementById("smoothie-chart"), 500);
 
 // Recieve Loudness data
 socket.on('loudness', function(data){
+  console.log('received loudness data:', data);
   if(!data)
     return;
 

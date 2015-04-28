@@ -25,17 +25,19 @@ app.get('/heatmap', function(req, res){
 });
 
 // Socket.io Logic
+var zmqsock = zmq.socket('pull');
 io.on('connection', function (socket) {
   console.log('socket.io connection made');
-  var zmqsock = zmq.socket('pull');
   zmqsock.bind(rpi);
   zmqsock.on('message', function(msg){
     msg = msg.toString();
     var msgtype = msg.charAt(0);
     msg = msg.substr(1);
     
-    if(msgtype === 'l')
+    if(msgtype === 'l'){
       socket.emit('loudness', msg);
+      console.log('sending loudness msg');
+    }
     else{
       socket.emit('fft', msg);
       console.log('sending fft msg');

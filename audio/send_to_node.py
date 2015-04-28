@@ -12,11 +12,42 @@ RATE = 48000
 FORMAT = pyaudio.paFloat32
 
 
+class Loudness(object):
+    def __init__(self, windowlength=50, numBuffers=4):
+        self.numBuffers = numBuffers
+        self.bufcount = 0
+        self.buf = np.array([], dtype=np.float32)
+        self.rms_queue = []
+        self.windowlength = windowlength
+
+    def addSamples(self, samples):
+        """samples is a string of bytes"""
+        self.buf = np.append(
+            self.buf,
+            np.fromstring(
+                samples,
+                dtype=np.float32))
+        self.bufcount += 1
+        if self.bufcount >= self.numBuffers:
+            self.bufcount = 0
+            rms = np.sqrt(np.mean(np.square(self.buf)))
+            self.buf = np.array([], dtype=np.float32)
+            return self.addRMS(rms)
+        return False
+
+    def addRMS(self, val):
+        self.rms_queue.append(val)
+        if len(self.rms_queue) >= self.windowlength:
+            return True, self.rms_queue.pop(0)
+        return False
+
+
 class AudioBuffer(object):
     """Class for buffering port audio samples and
     performing Loudness and FFT measurements"""
     def __init__(self, zmqSocket, loudDelay=1024, fftlength=5):
-        self.lqueue = ""
+        # self.lqueue = ""
+        self.lqueue = Loudness()
         self.fqueue = ""
         self.fcount = 0
         self.lcount = 0
@@ -27,28 +58,15 @@ class AudioBuffer(object):
 
     def addSamples(self, samples):
         # maybe add samples recursively to the loudness buf
-        self.lqueue = ''.join([self.lqueue, samples])
+        lready = self.lqueue.addSamples(samples)
         self.fqueue = ''.join([self.fqueue, samples])
-        self.lcount += CHUNK
         self.fcount += CHUNK
-        if self.lcount >= self.loudDelay:
-            self.calcLoudness()
         if self.fcount >= self._fftlength:
             self.calcFFT()
-
-    def calcLoudness(self):
-        """Convert to numpy array.
-        Calculate the loudness on the samples in the loudness queue.
-        Send ZMQ message.
-        Clear fqueue."""
-        print "fire loudness!"
-
-        # calc loudness
-        arr = np.fromstring(self.lqueue, dtype=np.float32)
-
-        # send ZMQ message
-
-        self.lqueue = ""
+        if lready:
+            _, lval = lready
+            #print "fire loudness!"
+            self.sock.send('l' + json.dumps({'value': 10.*log(lval)}))
 
     def calcFFT(self):
         """Convert to numpy array.
@@ -56,11 +74,11 @@ class AudioBuffer(object):
         Send ZMQ message.
         Clear fqueue."""
         arr = np.fromstring(self.fqueue, dtype=np.float32)
-        fft = np.fft.fft(arr)[:len(arr)/2:10]
+        fft = np.fft.fft(arr)[:len(arr)/2:50]
         mag = map(abs, fft)
         # don't send all values we don't need that pinpoint accuracy
         # maybe every 10 values
-        print "fire fft"
+        #print "fire fft"
 
         self.sock.send('f' + json.dumps({
             'nsamp': len(mag),
@@ -85,10 +103,10 @@ class AudioBuffer(object):
         self._fftlength = val
 
 
-def main(ip="127.0.0.1"):
+def main(ip='tcp://127.0.0.1:7777'):
     ctx = zmq.Context()
     s = ctx.socket(zmq.PUSH)
-    s.connect('tcp://127.0.0.1:7777')
+    s.connect(ip)
     buffer = AudioBuffer(s)
 
     p = pyaudio.PyAudio()
