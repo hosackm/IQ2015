@@ -41,3 +41,16 @@ body {
 .navitem:visited {
     text-decoration: none;
 }
+
+#loudplot {
+    height:640px;
+}
+
+#fftplot {
+    height:640px;
+}
+
+/*#fftchart {
+    height: 300px;
+    width: 100%;
+}*/

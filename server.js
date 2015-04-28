@@ -3,7 +3,10 @@ var app     = express();
 var server  = require('http').createServer(app);
 var io      = require('socket.io').listen(server);
 var nunjucks = require('nunjucks');
+var zmq = require('zmq');
+var zmqsock = zmq.socket('pull');
 var port = process.argv[2] || 8080;
+var rpi = process.argv[3] || 'tcp://127.0.0.1:7777';
 
 // Configurations
 nunjucks.configure('views', {autoescape: true, express: app});
@@ -19,9 +22,17 @@ app.get('/realtime', function(req, res){
 
 // Socket.io Logic
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
+  console.log('socket.io connection made');
+  zmqsock.connect(rpi);
+  zmqsock.on('message', function(msg){
+    var m = msg.toString();
+    var msgtype = m.charAt(0);
+    m = m.substr(1);
+    
+    if(msgtype === 'l')
+      socket.emit('loudness', m);
+    else
+      socket.emit('fft', m);
   });
 });
 

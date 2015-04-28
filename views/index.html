@@ -13,8 +13,8 @@
   </div>
 </div>
 <div clas="row">
-  <div class="col-md-4 jumbotron text-center">
-    <p>jumbo 4</p>
+  <div class="col-md-4 jumbotron text-center" id="realtime">
+    <p>Dolby Life Sensor</p>
   </div>
   <div class="col-md-4 jumbotron text-center">
     <p>jumbo 5</p>
@@ -26,4 +26,9 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+$("#realtime").click(function(){
+  window.location.href='/realtime';
+});
+</script>
 {% endblock %}
