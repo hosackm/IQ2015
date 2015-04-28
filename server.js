@@ -25,14 +25,14 @@ io.on('connection', function (socket) {
   console.log('socket.io connection made');
   zmqsock.connect(rpi);
   zmqsock.on('message', function(msg){
-    var m = msg.toString();
-    var msgtype = m.charAt(0);
-    m = m.substr(1);
+    msg = msg.toString();
+    var msgtype = msg.charAt(0);
+    msg = msg.substr(1);
     
     if(msgtype === 'l')
-      socket.emit('loudness', m);
+      socket.emit('loudness', msg);
     else
-      socket.emit('fft', m);
+      socket.emit('fft', msg);
   });
 });
 
