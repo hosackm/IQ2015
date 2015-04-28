@@ -4,7 +4,7 @@ var server  = require('http').createServer(app);
 var io      = require('socket.io').listen(server);
 var nunjucks = require('nunjucks');
 var zmq = require('zmq');
-var zmqsock = zmq.socket('pull');
+//var zmqsock = zmq.socket('pull');
 var port = process.argv[2] || 8080;
 var rpi = process.argv[3] || 'tcp://127.0.0.1:7777';
 
@@ -23,7 +23,9 @@ app.get('/realtime', function(req, res){
 // Socket.io Logic
 io.on('connection', function (socket) {
   console.log('socket.io connection made');
-  zmqsock.connect(rpi);
+  var zmqsock = zmq.socket('pull');
+  zmqsock.bind(rpi);
+  //zmqsock.connect(rpi);
   zmqsock.on('message', function(msg){
     msg = msg.toString();
     var msgtype = msg.charAt(0);
@@ -31,8 +33,10 @@ io.on('connection', function (socket) {
     
     if(msgtype === 'l')
       socket.emit('loudness', msg);
-    else
+    else{
       socket.emit('fft', msg);
+      console.log('sending fft msg');
+    }
   });
 });
 
