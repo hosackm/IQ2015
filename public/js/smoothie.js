@@ -749,8 +749,8 @@
 
     // Draw the axis values on the chart.
     if (!chartOptions.labels.disabled && !isNaN(this.valueRange.min) && !isNaN(this.valueRange.max)) {
-      var maxValueString = chartOptions.yMaxFormatter(this.valueRange.max, chartOptions.labels.precision),
-          minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision),
+      var maxValueString = chartOptions.yMaxFormatter(this.valueRange.max, chartOptions.labels.precision) + ' LKFS',
+          minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision) + ' LKFS',
           labelPos = chartOptions.scrollBackwards ? 0 : dimensions.width - context.measureText(maxValueString).width - 2;
       context.fillStyle = chartOptions.labels.fillStyle;
       context.fillText(maxValueString, labelPos, chartOptions.labels.fontSize);

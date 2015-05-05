@@ -1,19 +1,26 @@
 //Loudness Plot
-  // Global variables. yuck!
+// Global variables. yuck!
 var lsamps = [0, 1, 2, 3];
 var lcur = 0;
 var fftsamps = [];
-//  var socket = io.connect('http://localhost:8080');
-var socket = io.connect('http://mshosa-mba:8080');
+var socket = io.connect('http://localhost:8080');
+// var socket = io.connect('http://169.254.229.123:8080');
 var lseries = new TimeSeries();
 
-var loudchart = new SmoothieChart();
-loudchart.addTimeSeries(lseries, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
-loudchart.streamTo(document.getElementById("smoothie-chart"), 500);
+var loudchart = new SmoothieChart({
+  maxValue:-10,
+  minValue:-40,
+  timestampFormatter:SmoothieChart.timeFormatter
+});
+loudchart.addTimeSeries(lseries, {
+  strokeStyle: 'rgba(0, 255, 0, 1)',
+  fillStyle: 'rgba(0, 255, 0, 0.2)',
+  lineWidth: 4
+});
+loudchart.streamTo(document.getElementById("smoothie-chart"), 0);
 
 // Recieve Loudness data
 socket.on('loudness', function(data){
-  console.log('received loudness data:', data);
   if(!data)
     return;
 
@@ -30,6 +37,8 @@ socket.on('loudness', function(data){
 socket.on('fft', function(data){
   if(!data)
     return;
+
+  //console.log(data);
 
   // Ex. data = {length: 1024, samples: [0.0, 1.3, ... , 45.0]};
   data = JSON.parse(data);
@@ -50,8 +59,8 @@ socket.on('fft', function(data){
     width: 1310,
     height: 500,
     animationEnabled: true,
-    axisX:{title: "Frequency (Hz)", interval: 3},
-    axisY:{title: "Magnitude (dB)"},
+    axisX:{title: "Frequency (Hz)", minimum:20, maximum:20000},//, interval: 3},
+    axisY:{title: "Magnitude (dB)", minimum:0, maximum:150},
     legend: {},
     data: [{
       name: 'fft1',
@@ -62,6 +71,8 @@ socket.on('fft', function(data){
     }]
   });
   //chart.options.data[0].dataPoints = points.data;
+  //chart.update();
+
   chart.render();
   $(".canvasjs-chart-credit").remove();
 });

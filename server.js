@@ -24,23 +24,28 @@ app.get('/heatmap', function(req, res){
   res.render('heatmap.html', {});
 });
 
-// Socket.io Logic
+// ZMQ Setup
 var zmqsock = zmq.socket('pull');
+zmqsock.bind(rpi);
+console.log('zmq waiting on', rpi);
+
+// Socket.io Logic
 io.on('connection', function (socket) {
   console.log('socket.io connection made');
-  zmqsock.bind(rpi);
   zmqsock.on('message', function(msg){
+    //console.log('received msg', msg.toString());
     msg = msg.toString();
     var msgtype = msg.charAt(0);
     msg = msg.substr(1);
-    
+
     if(msgtype === 'l'){
       socket.emit('loudness', msg);
-      console.log('sending loudness msg');
+      return;
     }
-    else{
+    if(msgtype === 'f'){
       socket.emit('fft', msg);
-      console.log('sending fft msg');
+      //console.log('sending fft msg');
+      return;
     }
   });
 });

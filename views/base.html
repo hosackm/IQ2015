@@ -48,7 +48,16 @@
     $(document).ready(function() {
       $('#main-content').fadeIn().removeClass('hidden');
       $('#grid').fadeIn().removeClass('hidden');
+      $(document).keypress(function() {
+      console.log('button pressed', event.which);
+      if (event.which == 13) {
+        console.log('esc pressed');
+        window.location = '/';
+      }
     });
+    });
+    </script>
+    <script>
     </script>
 {% block scripts %}
 {% endblock %}

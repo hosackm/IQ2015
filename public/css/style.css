@@ -48,6 +48,7 @@ body {
 
 #fftplot {
     height:640px;
+    padding-left:300px;
 }
 
 .gridbox {
@@ -86,7 +87,7 @@ body {
 #map-canvas {
     margin-top: 60px;
     margin-left: 60px;
-    width: 1280px;
+    width: 1450px;
     height: 640px;
 /*    height: 480px;
     height: 100%;
